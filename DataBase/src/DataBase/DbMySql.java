@@ -2,7 +2,9 @@ package DataBase;
 
 import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 
 import com.mysql.jdbc.CallableStatement;
 import com.mysql.jdbc.Connection;
@@ -10,7 +12,6 @@ import com.mysql.jdbc.Statement;
 
 public class DbMySql {
 	
-	// Test
 	private final String JDBC_DRIVER = "com.mysql.jdbc.Driver"; 
 	private final String DB_URL = "jdbc:mysql://localhost:3306/final_db";
 	private String userName = "root";
@@ -44,9 +45,7 @@ public class DbMySql {
 	 */
 	public void AddString(String param, String value) throws SQLException
 	{
-		
 		statement.setString(param, value);
-//		statement.registerOutParameter(2, java.sql.Types.INTEGER);
 	}
 	
 	/**
@@ -84,20 +83,68 @@ public class DbMySql {
 	}
 	
 	/**
+	 * Declare of output parameter (type integer)
+	 * @param parameterIndex
+	 * @throws SQLException
+	 */
+	public void RegisterParameterInt(String parameterName) throws SQLException
+	{
+		statement.registerOutParameter(parameterName, Types.INTEGER);
+	}
+	
+	/**
+	 * Declare of output parameter (type integer)
+	 * @param parameterIndex
+	 * @throws SQLException
+	 */
+	public void RegisterParameterString(String parameterName) throws SQLException
+	{
+		statement.registerOutParameter(parameterName, Types.VARCHAR);
+	}
+	
+	/**
 	 * Execute the Stored Procedure
 	 * @throws SQLException
 	 */
-	public void Execut() throws SQLException
+	public void Execute() throws SQLException
 	{
 		statement.execute();
-		
 	}
 	
-//	public void After() throws Exception
-//	{
-//		id = statement.getInt(2);
-//		System.out.println("ID: " + id);
-//		connection.close();
-//	}
+	/**
+	 * Out the registered Parameter
+	 * @param columName column 
+	 * @return integer result
+	 * @throws SQLException
+	 */
+	public int OutParamerterInt(String columnName) throws SQLException
+	{
+		return statement.getInt(columnName);
+	}
 	
+	/**
+	 * Out the registered Parameter
+	 * @param columName column 
+	 * @return String result
+	 * @throws SQLException
+	 */
+	public String OutParamerterString(String columName) throws SQLException
+	{
+		return statement.getString(columName);
+	}
+	
+	/**
+	 * return the result from database
+	 * @return ResultSet
+	 * @throws SQLException
+	 */
+	public ResultSet resultSet() throws SQLException
+	{
+		return (ResultSet)statement.executeQuery();
+	}
+	
+	public void Close() throws SQLException
+	{
+		connection.close();
+	}
 }
