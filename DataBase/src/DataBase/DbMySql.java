@@ -10,6 +10,7 @@ import com.mysql.jdbc.Statement;
 
 public class DbMySql {
 	
+	// Test
 	private final String JDBC_DRIVER = "com.mysql.jdbc.Driver"; 
 	private final String DB_URL = "jdbc:mysql://localhost:3306/final_db";
 	private String userName = "root";
